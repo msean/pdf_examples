@@ -108,7 +108,6 @@ func setGridStartY(colHeight, startY, textHeight float64, lines int) float64 {
 // Draw 绘画整条col
 func (col *Col) Draw() {
 	fix, _ := col.NeedFix()
-	fmt.Println(">>>>>>>>>>", col.fixHeight)
 	gridxStart := col.startx
 	starty := col.pdf.GetY()
 	for _, grid := range col.Grids {
