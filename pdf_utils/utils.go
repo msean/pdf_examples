@@ -2,24 +2,20 @@ package pdf_utils
 
 import (
 	"regexp"
-	"strings"
 
 	"github.com/jung-kurt/gofpdf"
 )
 
 // DynamicCol 根据Grid的内容计算所需占用的列数
 func DynamicCol(width float64, text string, pdf *gofpdf.Fpdf) (rows int, lines []string) {
-	// 换行符打印有问题啊
-	text = strings.Replace(text, "\n", "", -1)
-	rows = 1
 	curWidth := 0.0
 	lines = make([]string, 0)
 	line := make([]rune, 0)
 	runes := []rune(text)
-	runeLineChange := []rune("\n")[0]
+	linebreak := []rune("\n")[0]
 	for i, r := range runes {
-		// 如果是换行符
-		if r == runeLineChange {
+		// 换行符
+		if r == linebreak {
 			lines = append(lines, string(line))
 			curWidth = 0.0
 			line = make([]rune, 0)
@@ -35,7 +31,6 @@ func DynamicCol(width float64, text string, pdf *gofpdf.Fpdf) (rows int, lines [
 			line = make([]rune, 0)
 		}
 		line = append(line, r)
-		// 最后一行
 		if i == len(runes)-1 && len(line) > 0 {
 			lines = append(lines, string(line))
 		}
